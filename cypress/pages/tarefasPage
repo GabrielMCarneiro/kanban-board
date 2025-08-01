@@ -1,0 +1,66 @@
+class TarefasPage {
+    selectorsList() {
+        const selectors = {
+            botaoDeCriarTarefa: ".custom-input",
+            campoDeTitulo: "[type='text']",
+            botaoDeConfirmar: "[type='submit']",
+            quadroDeTarefas: ".board-cards",
+            primeiraTarefaDaPrimeiraLista: ":nth-child(1) > .board-cards > :nth-child(1) > .content",
+            editarTitulo: ".custom-input",
+            selecionarCorRoxaNaTag: "#1Color",
+            adicionarNovaTag: "section > .custom-input > p",
+            iconeLixeira: ".content .trash",
+            cardDaUltimaTarefa: ":nth-child(1) > .board-cards > :nth-child(4) > .content"
+        }
+        return selectors
+    }
+
+    criarNovaTarefa() {
+        cy.get(this.selectorsList().botaoDeCriarTarefa).eq(0).click()
+        cy.get(this.selectorsList().campoDeTitulo).type("Tarefa de teste")
+        cy.get(this.selectorsList().botaoDeConfirmar).click()
+    }
+
+    checarTarefaCriada() {
+        cy.get(this.selectorsList().quadroDeTarefas).eq(0).contains("Tarefa de teste")
+    }
+
+    clicarNaTarefa() {
+        cy.get(this.selectorsList().primeiraTarefaDaPrimeiraLista).click()
+    }
+    
+    editarTituloDaTarefa() {
+        cy.get(this.selectorsList().editarTitulo).eq(0).click()
+        cy.get(this.selectorsList().campoDeTitulo).type("Tarefa editada")
+        cy.get(this.selectorsList().botaoDeConfirmar).click()
+    }
+
+    checarTituloEditado() {
+        cy.get(this.selectorsList().quadroDeTarefas).eq(0).click()
+        cy.get(this.selectorsList().quadroDeTarefas).eq(0).contains("Tarefa editada")
+    }
+
+    criarNovaTag() {
+        cy.get(this.selectorsList().selecionarCorRoxaNaTag).click()
+        cy.get(this.selectorsList().adicionarNovaTag).click()
+        cy.get(this.selectorsList().campoDeTitulo).type("Teste")
+        cy.get(this.selectorsList().botaoDeConfirmar).click()
+    }
+
+    checarTagCriada() {
+        cy.get(this.selectorsList().quadroDeTarefas).eq(0).click()
+        cy.get(this.selectorsList().quadroDeTarefas).eq(0).contains("Teste")
+    }
+
+    apagarTarefa() {
+        cy.get(this.selectorsList().iconeLixeira).eq(3).click({force:true})
+        //Aqui foi utilizado o clique forçado apenas porque o Cypress não detectou o botão, que só aparece em hover no card da tarefa.
+    }
+
+    checarAusenciaDeTarefa() {
+        cy.get(this.selectorsList().cardDaUltimaTarefa).should("not.exist")
+    }
+
+}
+
+export default TarefasPage

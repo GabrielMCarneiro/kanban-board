@@ -1,0 +1,38 @@
+class ListasPage {
+    selectorsList() {
+        const selectors = {
+            botaoDeCriarLista: ".sc-jqUVSM > .custom-input > p",
+            campoDeTitulo: "[type='text']",
+            botaoDeConfirmar: "[type='submit']",
+            layoutDasListas: ".drop-list",
+            iconeLixeira: ".header .trash",
+            listaApagada: ".drop-list > :nth-child(3)"
+        }
+        return selectors
+    }
+
+    acessarPaginaInicial() {
+        cy.visit('https://kanban-dusky-five.vercel.app/')
+    }
+
+    criarNovaLista() {
+        cy.get(this.selectorsList().botaoDeCriarLista).click()
+        cy.get(this.selectorsList().campoDeTitulo).type("Lista de teste")
+        cy.get(this.selectorsList().botaoDeConfirmar).click()
+    }
+
+    checarListaCriada() {
+        cy.get(this.selectorsList().layoutDasListas).contains("Lista de teste")
+    }
+
+    apagarLista() {
+        cy.get(this.selectorsList().iconeLixeira).eq(2).click()
+    }
+
+    checarAusenciaDeLista() {
+        cy.get(this.selectorsList().listaApagada).should("not.exist")
+    }
+
+}
+
+export default ListasPage
