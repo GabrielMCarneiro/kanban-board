@@ -4,7 +4,7 @@ import TarefasPage from "../pages/tarefasPage"
 const listasPage = new ListasPage()
 const tarefasPage = new TarefasPage()
 
-describe('Testes Vercel App', () => {  
+describe('Testes Kanban Board', () => {  
 
   it('Adicionando nova lista', () => {
     listasPage.acessarPaginaInicial()
